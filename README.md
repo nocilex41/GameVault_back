@@ -8,6 +8,6 @@
 HTTP_PORT=8000 HTTPS_PORT=4443 HTTP3_PORT=4443 docker compose up --pull always -d --wait
 4. Open `https://localhost` in your favorite web browser and [accept the auto-generated TLS certificate](https://stackoverflow.com/a/15076602/1352334)
 5. Run `docker compose down --remove-orphans` to stop the Docker containers.
-
+6. Entrer dans docker `sudo docker exec -it gamevault_back-php-1  bash`
 
 
