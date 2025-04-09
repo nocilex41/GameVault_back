@@ -8,19 +8,19 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
-
 use App\Repository\GameRepository;
 
+#[Route('/api/game', name: 'app_game_')]
 final class GameController extends AbstractController
 {
-    #[Route('/api/game', name: 'app_game', methods: ['GET'])]
+    #[Route('', name: 'list', methods: ['GET'])]
     public function index(GameRepository $gameRepository): Response
     {
         $games = $gameRepository->findAll();
         return $this->json($games);
     }
 
-    #[Route('/api/game/delete', name: 'app_game_delete', methods: ['POST'])]
+    #[Route('/delete', name: 'delete', methods: ['POST'])]
     public function delete(Request $request, EntityManagerInterface $em, GameRepository $repo): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
