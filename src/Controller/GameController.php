@@ -13,12 +13,8 @@ final class GameController extends AbstractController
     #[Route('/api/game', name: 'app_game', methods: ['GET'])]
     public function index(GameRepository $gameRepository): Response
     {
-
-
         $games = $gameRepository->findAll();
-
-
-        return $this->json($games, 200, [], ['groups' => 'game:read']);
+        return $this->json($games);
     }
 }
 
