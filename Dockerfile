@@ -33,6 +33,13 @@ RUN set -eux; \
 		zip \
 	;
 
+RUN apt-get update && apt-get install -y \
+    libpq-dev \
+    libonig-dev \
+    libxml2-dev \
+    unzip \
+    && docker-php-ext-install pdo pdo_mysql
+
 # https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
