@@ -59,3 +59,84 @@ sudo docker exec -it gamevault_back-php-1 bash
 bdd : 
 
 DATABASE_URL="mysql://u421430464_gamevaultUser:AjfjDFUfhf74364@193.203.168.4:3306/u421430464_gamevault?serverVersion=mariadb-10.11.10&charset=utf8"
+
+
+
+EntryPoints de l'API
+Le contrôleur GameController expose plusieurs routes disponibles pour les interactions avec l'API. Voici une documentation détaillée des endpoints.
+
+### 1. Récupérer tous les jeux
+Description
+Récupère la liste de tous les jeux disponibles.
+
+Méthode HTTP : GET
+URL : /api/game
+Nom de route : app_game_list
+Exemple de Réponse
+[
+    {
+        "id": 1,
+        "name": "Game 1",
+        "slug": "game-1",
+        "isFavorite": false
+    },
+    {
+        "id": 2,
+        "name": "Game 2",
+        "slug": "game-2",
+        "isFavorite": true
+    }
+]
+
+### 2. Ajouter un jeu aux favoris
+Description
+Ajoute un jeu à la liste des favoris.
+
+Méthode HTTP : POST
+URL : /api/game/favorite
+Nom de route : app_game_favorite_add
+Corps de la Requête (JSON)
+{
+    "game": {
+        "id": 1,
+        "name": "Game 1",
+        "slug": "game-1",
+        "isFavorite": true
+    }
+}
+
+Exemple de Réponse
+{
+    "message": "Game added to favorites",
+    "game": {
+        "id": 1,
+        "slug": "game-1",
+        "name": "Game 1",
+        "isFavorite": true
+    }
+}
+
+### 3. Supprimer un jeu des favoris
+Description
+Supprime un jeu de la liste des favoris.
+
+Méthode HTTP : DELETE
+URL : /api/game/delete
+Nom de route : app_game_favorite_remove
+Corps de la Requête (JSON)
+{
+    "slug": "game-1"
+}
+
+Exemple de Réponse
+En cas de succès :
+
+{
+    "success": true
+}
+
+En cas d'erreur (jeu non trouvé) :
+
+{
+    "error": "Game not found"
+}
