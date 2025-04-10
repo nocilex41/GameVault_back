@@ -50,7 +50,7 @@ final class GameController extends AbstractController
         ]]);
     }
 
-    #[Route('/favorite', name: 'favorite_remove', methods: ['DELETE'])]
+    #[Route('/delete', name: 'favorite_remove', methods: ['DELETE'])]
     public function removeFavorite(
         Request $request,
         GameRepository $gameRepository,
@@ -71,35 +71,9 @@ final class GameController extends AbstractController
             return $this->json(['error' => 'Game not found'], 404);
         }
 
-        // Retirer le favori
-        $game->setIsFavorite(false);
-
         // Persister les changements et les enregistrer
-        $entityManager->persist($game);
+        $entityManager->remove($game);
         $entityManager->flush();
-
-        return $this->json(['message' => 'Game removed from favorites']);
-    }
-
-    #[Route('/delete', name: 'delete', methods: ['POST'])]
-    public function delete(Request $request, EntityManagerInterface $em, GameRepository $repo): JsonResponse
-    {
-        $data = json_decode($request->getContent(), true);
-
-        $id = $data['id'] ?? null;
-
-        if (!$id) {
-            return $this->json(['error' => 'ID manquant'], 400); // Retourner une erreur 400 pour ID manquant
-        }
-
-        $game = $repo->find($id);
-
-        if (!$game) {
-            return $this->json(['error' => 'Jeu introuvable'], 404); // Retourner une erreur 404 si le jeu n'est pas trouvé
-        }
-
-        $em->remove($game);
-        $em->flush();
 
         return $this->json(['success' => true]);
     }
